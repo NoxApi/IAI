@@ -2,20 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: Nasalization;
+  src: url("../../public/font/Nasalization Rg.otf");
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.fontNasalization {
+  font-family: "Nasalization";
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.fontmonters {
+  font-family: var(--font-montserrat);
+}
+
+.fontOpen {
+  font-family: var(--font-open-sans);
+}
+.fontIter {
+  font-family: var(--font-inter);
+}
+
+.bgtext {
+  /* Gradient Background */
+  background: var(
+    --gradient-gradient-1,
+    linear-gradient(275deg, #13b3fc 10.07%, #8e4de1 50.81%, #d912d3 91.56%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; /* Ensure transparent text fallback */
+  -webkit-text-fill-color: transparent;
+
+  /* Compatibility for Firefox (optional improvement) */
+  mask-image: var(
+    --gradient-gradient-1,
+    linear-gradient(275deg, #13b3fc 10.07%, #8e4de1 50.81%, #d912d3 91.56%)
+  );
+  -webkit-mask-image: var(
+    --gradient-gradient-1,
+    linear-gradient(275deg, #13b3fc 10.07%, #8e4de1 50.81%, #d912d3 91.56%)
+  );
+}
+
+.bgmain {
+  background: radial-gradient(
+      101.06% 56.85% at 23.59% 35.79%,
+      #380952 0%,
+      rgba(56, 9, 82, 0.3) 50%,
+      rgba(56, 9, 82, 0) 100%
+    ),
+    #0a022a;
 }
