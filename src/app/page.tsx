@@ -12,9 +12,9 @@ import IAI2 from "../../svg/IAI2";
 
 export default function Home() {
   const [switchChain, setSwitchChain] = useState(false);
-  const [iaiAmount, setIaiAmount] = useState<number | undefined>(undefined); // Amount in $IAI
-  const [usdAmount, setUsdAmount] = useState<number | undefined>(undefined); // Amount in USD
-  const conversionRate = 0.025; // 1 $IAI = $0.025
+  const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
+  const [usdAmount, setUsdAmount] = useState<number | null>(0); // Amount in USD
+  const conversionRate = 0.016; // 1 $IAI = $0.016
 
   // Handle changes in $IAI input
   const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +22,9 @@ export default function Home() {
 
     // Allow empty input but convert valid numbers
     const numberValue = parseFloat(value);
-    if (value === "" || (!isNaN(numberValue) && numberValue > 0)) {
-      setIaiAmount(value === "" ? undefined : numberValue);
-      setUsdAmount(value === "" ? undefined : numberValue * conversionRate);
+    if (value === "" || (!isNaN(numberValue) && numberValue >= 0)) {
+      setIaiAmount(value === "" ? null : numberValue);
+      setUsdAmount(value === "" ? null : numberValue * conversionRate);
     }
   };
 
@@ -34,9 +34,9 @@ export default function Home() {
 
     // Allow empty input but convert valid numbers
     const numberValue = parseFloat(value);
-    if (value === "" || (!isNaN(numberValue) && numberValue > 0)) {
-      setUsdAmount(value === "" ? undefined : numberValue);
-      setIaiAmount(value === "" ? undefined : numberValue / conversionRate);
+    if (value === "" || (!isNaN(numberValue) && numberValue >= 0)) {
+      setUsdAmount(value === "" ? null : numberValue);
+      setIaiAmount(value === "" ? null : numberValue / conversionRate);
     }
   };
 
@@ -133,6 +133,13 @@ export default function Home() {
               </div>
             </div>
           </div>
+          {usdAmount !== undefined && usdAmount !== null && usdAmount <= 0 && (
+            <>
+              <h6 className="text-red-400 text-[12px]">
+                your credit is not Enough
+              </h6>
+            </>
+          )}
           <button className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
             Buy $IAI
           </button>
