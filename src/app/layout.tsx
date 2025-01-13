@@ -3,6 +3,8 @@ import { Inter, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import ContextProvider from "./context";
+import { headers } from 'next/headers'
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -33,19 +35,23 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
+      
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <ContextProvider>
+          <Navbar />
+            {children}
+          <Footer />
+        </ContextProvider>
       </body>
+      
     </html>
   );
 }

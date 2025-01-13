@@ -1,8 +1,24 @@
+'use client'
 import Image from "next/image";
 import IAI from "../../../svg/IAI";
 import Wallet from "../../../svg/Wallet";
+import { useAppKit, useDisconnect } from "@reown/appkit/react";
+import { useAccount } from "wagmi";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const { open } = useAppKit()
+  const { disconnect } = useDisconnect()
+   const { address } = useAccount()
+   const [localaddress,setlocaladdress] = useState<any>(null)
+   useEffect(()=>{
+    if(address){
+      setlocaladdress(address)
+    } 
+    else{
+      setlocaladdress(null)
+    }
+   },[address])
   return (
     <header className="w-full h-[64px] bg-[#11111199] flex justify-center px-[50px] py-[12px] smm:px-[8.125vw] ">
       <nav className="max-w-[1360px] w-full h-full  flex justify-between">
@@ -19,7 +35,14 @@ const Navbar = () => {
           <IAI width="121" height="15" className={"fill-white"} />
         </div>
 
-        <button className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters ">
+        {localaddress?
+          (<button onClick={()=>(disconnect())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters">
+            <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
+            {localaddress}
+          </h6>
+          </button >)
+          :
+          (<button onClick={()=>(open())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters ">
           <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
             Connect Wallet
           </h6>
@@ -28,7 +51,7 @@ const Navbar = () => {
             height="18"
             className={`fill-white xl:hidden lg:hidden md:hidden`}
           />
-        </button>
+        </button>)}
       </nav>
     </header>
   );

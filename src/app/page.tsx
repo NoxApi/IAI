@@ -1,20 +1,18 @@
 "use client";
-
 import Image from "next/image";
 import IAI from "../../svg/IAI";
-import Polygon from "../../svg/Polygon";
-import Switch from "../../svg/Switch";
 import Usdt from "../../svg/Usdt";
-import { useState } from "react";
-import Bcs from "../../svg/Bcs";
-import Wallet from "../../svg/Wallet";
+import { useEffect, useState } from "react";
 import IAI2 from "../../svg/IAI2";
+import { useAccount } from "wagmi";
+import ChainSwitchButton from "./components/ChainSwitchBotton";
 
 export default function Home() {
-  const [switchChain, setSwitchChain] = useState(false);
+  const [ChainID,setChainID] = useState<any>(null);
   const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
   const [usdAmount, setUsdAmount] = useState<number | null>(0); // Amount in USD
   const conversionRate = 0.016; // 1 $IAI = $0.016
+  
 
   // Handle changes in $IAI input
   const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +25,7 @@ export default function Home() {
       setUsdAmount(value === "" ? null : numberValue * conversionRate);
     }
   };
-
-  // Handle changes in USD input
+  
   const handleUsdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -43,7 +40,6 @@ export default function Home() {
   const handleMaxClick = () => {
     setUsdAmount(usdAmount);
   };
-
   // const [multiplyPrice, setMultiplyPrice] = useState(0); setMultiplyPrice(Number(inputValue) * 250);
   return (
     <div className="h-[100vh] w-full flex flex-col justify-center items-center  ">
@@ -73,28 +69,7 @@ export default function Home() {
                 1 $IAI = $0.025
               </h5>
             </div>
-            <div
-              className=" border border-[#6D15CC] rounded-lg"
-              onClick={() => setSwitchChain(!switchChain)}
-            >
-              {switchChain ? (
-                <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                  <Bcs width="24" height="24" className={"fill-white"} />
-                  <h5 className="fontmonters text-[16px] text-white capitalize">
-                    binance
-                  </h5>
-                  <Switch width="21" height="20" className={""} />
-                </button>
-              ) : (
-                <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                  <Polygon width="21" height="20" className={"fill-white"} />
-                  <h5 className="fontmonters text-[16px] text-white">
-                    Polygon
-                  </h5>
-                  <Switch width="21" height="20" className={""} />
-                </button>
-              )}
-            </div>
+            <ChainSwitchButton/>
           </div>
           <div className="flex flex-col gap-y-6">
             <div className="flex flex-col gap-y-1">
@@ -109,10 +84,10 @@ export default function Home() {
                     className="flex-1 outline-none"
                     placeholder="0"
                     value={usdAmount ?? ""}
-                    onChange={handleUsdChange}
+                    onChange={()=>{handleUsdChange}}
                   />
                 </div>
-                <button onClick={handleMaxClick}>
+                <button onClick={()=>{handleMaxClick}}>
                   <h5 className="fontIter text-[14px] text-[#6D15CC]">MAX</h5>
                 </button>
               </div>
@@ -127,7 +102,7 @@ export default function Home() {
                     className="flex-1 outline-none"
                     placeholder="0"
                     value={iaiAmount ?? ""}
-                    onChange={handleIaiChange}
+                    onChange={()=>{handleIaiChange}}
                   />
                 </div>
               </div>

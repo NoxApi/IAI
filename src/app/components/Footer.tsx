@@ -1,3 +1,4 @@
+'use client'
 export const Footer = () => {
   return (
     <footer className="w-full bg-[#111F60] py-4 flex flex-col items-center">
