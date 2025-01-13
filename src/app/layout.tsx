@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain`}
+        className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain `}
       >
         <Navbar />
         {children}
