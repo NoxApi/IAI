@@ -10,6 +10,11 @@ import Bcs from "../../svg/Bcs";
 import Wallet from "../../svg/Wallet";
 import IAI2 from "../../svg/IAI2";
 import { useDisplay } from "./hook/useDisplayaltered";
+import { Footer } from "./components/Footer";
+import TotalPurchased from "./components/TotalPurchased";
+import SwitchChain from "./components/SwitchChain";
+import InputUSDT from "./components/InputUSDT";
+import { InputIAI } from "./components/InputIAI";
 
 export default function Home() {
   const [switchChain, setSwitchChain] = useState(false);
@@ -51,7 +56,7 @@ export default function Home() {
 
   // const [multiplyPrice, setMultiplyPrice] = useState(0); setMultiplyPrice(Number(inputValue) * 250);
   return (
-    <div className=" h-[calc(100vh-77px)] w-full flex flex-col justify-start items-center ">
+    <div className=" min-h-[100vh] w-full flex flex-col justify-start items-center ">
       {/* bg-[#6D15CC] */}
       <main className="max-w-[1360px] w-full  flex flex-col items-center px-10 smm:px-[5vw] pt-[30px] pb-[80px] smm:pt-0">
         <div className="flex flex-col gap-y-[10px] items-center ">
@@ -79,20 +84,7 @@ export default function Home() {
               :
             </h4>
           </div>
-          <div className="flex gap-x-1 items-center">
-            <h4 className="fontOpen text-[16px] tracking-[0.64px] text-white">
-              {numberaltered(purchased)}
-            </h4>
-            <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
-              /
-            </h4>
-            <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
-              {numberaltered(totalPurchased)}
-            </h4>
-            <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
-              $IAI
-            </h4>
-          </div>
+          <TotalPurchased purchased={purchased} totalPurchased={totalPurchased} numberaltered={numberaltered}  />
         </div>
         {/* add style */}
         <div className=" rounded-[20px] p-10 mt-6 flex flex-col  gap-y-6 bg-[rgba(17,31,96,0.38)] lgm:w-full smm:p-0 smm:bg-transparent w-[505px] ">
@@ -109,23 +101,7 @@ export default function Home() {
               className=" border border-[#6D15CC] rounded-lg"
               onClick={() => setSwitchChain(!switchChain)}
             >
-              {switchChain ? (
-                <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                  <Bcs width="24" height="24" className={"fill-white"} />
-                  <h5 className="fontmonters text-[16px] text-white capitalize">
-                    binance
-                  </h5>
-                  <Switch width="21" height="20" className={""} />
-                </button>
-              ) : (
-                <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                  <Polygon width="21" height="20" className={"fill-white"} />
-                  <h5 className="fontmonters text-[16px] text-white">
-                    Polygon
-                  </h5>
-                  <Switch width="21" height="20" className={""} />
-                </button>
-              )}
+              <SwitchChain switchChain={switchChain} />
             </div>
           </div>
           <div className="flex flex-col gap-y-6">
@@ -133,35 +109,12 @@ export default function Home() {
               <h5 className="fontIter text-[14px] text-white">
                 Pay with - USDT
               </h5>
-              <div className="w-full bg-white flex gap-x-3 py-[10px] px-3 rounded-md ">
-                <div className="flex gap-x-2 flex-1 items-center">
-                  <Usdt width="24" height="24" className={""} />
-                  <input
-                    type="number"
-                    className="flex-1 outline-none"
-                    placeholder="0"
-                    value={usdAmount ?? ""}
-                    onChange={handleUsdChange}
-                  />
-                </div>
-                <button onClick={handleMaxClick}>
-                  <h5 className="fontIter text-[14px] text-[#6D15CC]">MAX</h5>
-                </button>
-              </div>
+              <InputUSDT usdAmount={usdAmount} handleUsdChange={handleUsdChange} handleMaxClick={handleMaxClick} />
             </div>
             <div className="flex flex-col gap-y-1">
               <h5 className="fontIter text-[14px] text-white">Receive $IAI</h5>
               <div className="w-full bg-white flex gap-x-3 py-[10px] px-3 rounded-md">
-                <div className="flex gap-x-2 flex-1 items-center">
-                  <IAI2 width={20} height={20} className={"fill-white"} />
-                  <input
-                    type="number"
-                    className="flex-1 outline-none"
-                    placeholder="0"
-                    value={iaiAmount ?? ""}
-                    onChange={handleIaiChange}
-                  />
-                </div>
+                <InputIAI iaiAmount={iaiAmount} handleIaiChange={handleIaiChange}  />
               </div>
             </div>
           </div>
@@ -181,6 +134,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

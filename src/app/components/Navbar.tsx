@@ -7,6 +7,7 @@ import { useState } from "react";
 import IAI2 from "../../../svg/IAI2";
 import NewLogo from "../../../svg/NewLogo";
 import { useDisplay } from "../hook/useDisplayaltered";
+import Balance from "./Navbarcomponents/Balance";
 
 const Navbar = () => {
   const [balance, setBalance] = useState(0);
@@ -27,12 +28,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-1 items-center">
-          <div className="flex gap-2 px-3 items-center justify-center h-[46px]">
-            <IAI2 width={20} height={20} className={"fill-white"} />
-            <h5 className="fontmonters text-[16px] text-white font-medium">
-              {numberaltered(balance)} $IAI
-            </h5>
-          </div>
+          <Balance balance={balance} numberaltered={numberaltered} />
           <button className="px-[20px] smm:px-[14px] py-2 bg-[#6D15CC] rounded-lg  fontmonters h-[40px] ">
             <h6 className="text-[16px] text-[#F7F7FA] mdm:hidden">
               Connect Wallet
