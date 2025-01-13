@@ -14,6 +14,8 @@ export default function Home() {
   const [switchChain, setSwitchChain] = useState(false);
   const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
   const [usdAmount, setUsdAmount] = useState<number | null>(0); // Amount in USD
+  const [purchased, setPurchased] = useState(302322);
+  const [totalPurchased, setTotalPurchased] = useState(1000000);
   const conversionRate = 0.016; // 1 $IAI = $0.016
 
   // Handle changes in $IAI input
@@ -62,6 +64,33 @@ export default function Home() {
             early rewards and shape the future of smart cities and Web3
             technology.
           </p>
+          {/* add style */}
+          <div className="flex gap-[6px] justify-center smm:flex-col">
+            <div className="flex gap-x-1 items-center">
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-white">
+                Total Purchased
+              </h4>
+              <IAI2 width={24} height={24} className={"fill-white"} />
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-white">
+                :
+              </h4>
+            </div>
+            <div className="flex gap-x-1 items-center">
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-white">
+                {purchased}
+              </h4>
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
+                /
+              </h4>
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
+                {totalPurchased}
+              </h4>
+              <h4 className="fontOpen text-[16px] tracking-[0.64px] text-[#55486c]">
+                $IAI
+              </h4>
+            </div>
+          </div>
+          {/* add style */}
         </div>
         <div className=" rounded-[20px] p-10 mt-6 flex flex-col  gap-y-6 bg-[rgba(17,31,96,0.38)] lgm:w-full smm:p-0 smm:bg-transparent w-[505px] ">
           <div className="flex gap-x-[10px] items-center">
@@ -133,13 +162,15 @@ export default function Home() {
               </div>
             </div>
           </div>
+          {/* edit text */}
           {usdAmount !== undefined && usdAmount !== null && usdAmount <= 0 && (
             <>
-              <h6 className="text-red-400 text-[12px]">
-                your credit is not Enough
+              <h6 className="text-[#FF0000] text-[14px] fontIter">
+                You do not have enough ETH to pay for this transaction.
               </h6>
             </>
           )}
+          {/* edit text */}
           <button className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
             Buy $IAI
           </button>
