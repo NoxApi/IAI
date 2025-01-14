@@ -38,19 +38,14 @@ export default function Home() {
     unit=6
   }
 
-  const { data: IAIBalance,error:IAIBalanceerror,isPending:IAIBalancepending} = useReadContract({
+  const { data: IAIBalance,error:IAIBalanceerror,isPending:IAIBalancepending,refetch:refetchIai} = useReadContract({
       address:IAITokenAddress as `0x${string}`,
       abi:ERC20contractABI,
       functionName: 'balanceOf',
       args: [address],
-      
   })
-  // const { data: presalestatus,error:presaleerror,isPending:presalepending} = useReadContract({
-  //   address:IAIContractAddress as `0x${string}`,
-  //   abi:contractABI,
-  //   functionName: 'getPresaleStatus',
-  // })
-  const { data: allowance,} = useReadContract({
+
+  const { data: allowance,refetch:refetchallownace} = useReadContract({
         address:USDTContractAdress as `0x${string}`,
         abi:ERC20contractABI,
         functionName: 'allowance',
@@ -117,7 +112,7 @@ export default function Home() {
             <ChainSwitchButton/>
           </div>
           <Exchange chainId={chainId} useraddress={address}/>
-          {chainId&&<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress}/>} 
+          {chainId&&<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai}/>} 
         </div>
       </main>
     </div>
