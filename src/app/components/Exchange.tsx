@@ -4,44 +4,53 @@ import IAI2 from "../../../svg/IAI2";
 import { useGlobalContext } from "./state/Global";
 import { useAccount, useReadContract } from "wagmi";
 import { contractABI } from "../contracts/IAI";
-import { formatEther } from "ethers";
-const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!
-const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!
-const polyID = process.env.NEXT_PUBLIC_POLYGON_CHAINID!
-const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID!
-export default function Exchange({chainId}:{chainId:any}){
+import { formatUnits } from "ethers";
+import { ERC20contractABI } from "../contracts/ERC20";
+const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS
+const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS
+const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID
+const polyUSDT = process.env.NEXT_PUBLIC_POLYGON_USDT_ADDRESS
+const bscUSDT = process.env.NEXT_PUBLIC_BSC_USDT_ADDRESS
+export default function Exchange({chainId,useraddress}:{chainId:any,useraddress:any}){
     let address
+    let USDT
+    let unit = 0
     if(chainId?.toString()==bscID){
       address = bscaddress
+      USDT = bscUSDT
+      unit = 18
     }
-    else if(chainId?.toString()==polyID){
+    else {
       address = polyaddress
+      USDT= polyUSDT
+      unit = 6
     }
-    console.log(address)
   let Fomattedprice = ""
-          const { 
-            data: price,
-            error,
-            isPending
-          } = useReadContract({
+  const { data: price,error,isPending} = useReadContract({
             address:address as `0x${string}`,
             abi:contractABI,
             functionName: 'tokenPrice',
-          })
+  })
+  const { data:USDTamount,error:errorfetchUSDT,isPending:isUSDTpening} = useReadContract({
+    address:USDT as `0x${string}`,
+    abi:ERC20contractABI,
+    functionName: 'balanceOf',
+    args: [useraddress]
+  })
   const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
   const {USDTAmount,setUSDTAmount,MaxUSDT} = useGlobalContext()!
   // Handle changes in $IAI input
 
   if(price){
-    console.log(price)
     if(typeof(price)=="bigint"){
-      Fomattedprice = formatEther(price)
+      Fomattedprice = formatUnits(price,unit)
      }
   }
   if(error){
     console.log(error)
   }
 const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if(price){
     const value = e.target.value;
 
     // Allow empty input but convert valid numbers
@@ -51,8 +60,10 @@ const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setUSDTAmount(value === "" ? null : numberValue * parseFloat(Fomattedprice));
     }
   };
-  
+
+  }
   const handleUsdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(price){
     const value = e.target.value;
 
     // Allow empty input but convert valid numbers
@@ -62,13 +73,23 @@ const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setIaiAmount(value === "" ? null : numberValue / parseFloat(Fomattedprice));
     }
   };
-  
+}
   const handleMaxClick = () => {
-    setUSDTAmount(MaxUSDT);
+    console.log(USDTamount)
+    if(USDTamount){
+      if(typeof(USDTamount)=="bigint"){
+      setUSDTAmount(formatUnits(USDTamount,unit));
+      }
+    }
   };
     return(
         <div className="flex flex-col gap-y-6">
-            {!isPending&&<h5 className="fontOpen text-[14px] text-white flex">
+            {isPending?
+              <h5 className="fontOpen text-[14px] text-white flex">
+              {"1 $IAI = Fetching price"}
+              </h5>
+              :
+              <h5 className="fontOpen text-[14px] text-white flex">
                 {"1 $IAI ="+ Fomattedprice + " USDT"}
               </h5>}
             <div className="flex flex-col gap-y-1">

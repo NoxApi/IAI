@@ -10,9 +10,7 @@ import BuyIAIPolygon from "./components/BuyIAI";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [localaddress,setlocaladdress] = useState<any>("")
   const {chainId,address} = useAccount()
-  const conversionRate = 0.016; // 1 $IAI = $0.016
   //todo
   console.log("refreshed")
   return (
@@ -43,7 +41,7 @@ export default function Home() {
             </div>
             <ChainSwitchButton/>
           </div>
-          {chainId&&<Exchange chainId={chainId}/>}
+          <Exchange chainId={chainId} useraddress={address}/>
           {chainId&&<BuyIAI/>} 
         </div>
       </main>
