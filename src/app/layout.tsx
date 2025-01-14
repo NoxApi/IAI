@@ -19,7 +19,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "IAI.CENTER",
   description: "IAI",
-};
+  }
 
 export default function RootLayout({
   children
@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/iai.ico" />
+      </head>
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain  `}
       >

@@ -30,7 +30,7 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress}:{Allowance:any
                 address: USDTAddress,
                 abi:ERC20contractABI,
                 functionName: 'approve',
-                args: [IAIAddress,(parseUnits(USDTAmount.toString(),6))],
+                args: [IAIAddress,(parseUnits(USDTAmount.toString(),unit))],
               })
             }          
           } 
