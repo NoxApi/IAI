@@ -24,19 +24,22 @@ const Navbar = () => {
               className={"fill-white smm:w-[32px] smm:h-[25px]"}
             />
           </div>
-          <IAI width="121" height="15" className={"fill-white mdm:hidden "} />
+          {/* fix responsive */}
+          <IAI width="121" height="15" className={"fill-white smm:hidden "} />
         </div>
 
         <div className="flex gap-1 items-center">
           <Balance balance={balance} numberaltered={numberaltered} />
           <button className="px-[20px] smm:px-[14px] py-2 bg-[#6D15CC] rounded-lg  fontmonters h-[40px] ">
-            <h6 className="text-[16px] text-[#F7F7FA] mdm:hidden">
+            {/* fix responsive */}
+            <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
               Connect Wallet
             </h6>
             <Wallet
               width="20"
               height="18"
-              className={`fill-white xl:hidden lg:hidden md:hidden`}
+              // fix responsive
+              className={`fill-white xl:hidden lg:hidden md:hidden sm:hidden`}
             />
           </button>
         </div>
