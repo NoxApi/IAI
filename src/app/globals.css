@@ -54,4 +54,6 @@
       rgba(56, 9, 82, 0) 100%
     ),
     #0a022a;
+  /* add no-repeat fix weird layout */
+  background-repeat: no-repeat;
 }
