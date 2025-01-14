@@ -1,7 +1,7 @@
 import { cookieStorage, createStorage, http } from '@wagmi/core'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { polygon,bsc,polygonAmoy,bscTestnet} from '@reown/appkit/networks'
-export const projectId = '310b8ab42a42e6c05f28f020451f9516'
+export const projectId = 'aef799f8e90db4c52a469da57288e13a'
 
 if (!projectId) {
   throw new Error('Project ID is not defined')

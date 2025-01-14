@@ -6,12 +6,15 @@ import { useAppKit, useDisconnect } from "@reown/appkit/react";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import NewLogo from "../../../svg/NewLogo";
+import Balance from "./Navbarcomponents/Balance";
+import { useDisplay } from "../hook/useDisplayaltered";
 
-const Navbar = () => {
+const Navbar = ({IAIbalance}:{IAIbalance:any}) => {
   const { open } = useAppKit()
   const { disconnect } = useDisconnect()
    const { address } = useAccount()
    const [localaddress,setlocaladdress] = useState<any>(null)
+   const { numberaltered } = useDisplay()!;
    useEffect(()=>{
     if(address){
       setlocaladdress(address)
@@ -35,7 +38,8 @@ const Navbar = () => {
           {/* fix responsive */}
           <IAI width="121" height="15" className={"fill-white smm:hidden "} />
         </div>
-
+        <div className="flex gap-1 items-center">
+        <Balance balance={IAIbalance} numberaltered={numberaltered} />
         {localaddress?
           (<button onClick={()=>(disconnect())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters">
             <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
@@ -53,6 +57,7 @@ const Navbar = () => {
             className={`fill-white xl:hidden lg:hidden md:hidden`}
           />
         </button>)}
+        </div>
       </nav>
     </header>
   );

@@ -27,9 +27,9 @@ export default function Exchange({chainId,useraddress}:{chainId:any,useraddress:
     }
   let Fomattedprice = ""
   const { data: price,error,isPending} = useReadContract({
-            address:address as `0x${string}`,
-            abi:contractABI,
-            functionName: 'tokenPrice',
+    address:address as `0x${string}`,
+    abi:contractABI,
+    functionName: 'tokenPrice',
   })
   const { data:USDTamount,error:errorfetchUSDT,isPending:isUSDTpening} = useReadContract({
     address:USDT as `0x${string}`,

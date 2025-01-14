@@ -31,7 +31,6 @@ export default function RootLayout({
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain  `}
       >
-        
         <ContextProvider>
           <GlobalProvider>
             {children}

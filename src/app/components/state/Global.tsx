@@ -8,6 +8,8 @@ import {
 } from "react";
 
 type GlobalValue = {
+  openmodal: string;
+  setOpenmodal: Dispatch<SetStateAction<string>>;
   USDTAmount: any;
   setUSDTAmount: Dispatch<SetStateAction<any>>;
   MaxUSDT: any;
@@ -20,12 +22,16 @@ type GlobalValue = {
 
 export const GlobalContext = createContext<GlobalValue>(null);
 export function GlobalProvider(props: any) {
+  const [openmodal, setOpenmodal] = useState("");
   const [USDTAmount, setUSDTAmount] = useState(0);
   const [AllowanceAmount,setAllowanceAmount] = useState(0)
   const [MaxUSDT, setMaxUSDT] = useState(0);
   const [SignedMessage,setSignedMessage] = useState<any>(null);
+  
 
   const value: GlobalValue = {
+    openmodal,
+    setOpenmodal,
     USDTAmount, 
     setUSDTAmount,
     SignedMessage, 
