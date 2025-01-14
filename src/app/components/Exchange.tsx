@@ -7,8 +7,8 @@ import { contractABI } from "../contracts/IAI";
 import { formatEther } from "ethers";
 const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!
 const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!
-const bscID = process.env.NEXT_PUBLIC_POLYGON_CHAINID!
-const polyID = process.env.NEXT_PUBLIC_BSC_CHAINID!
+const polyID = process.env.NEXT_PUBLIC_POLYGON_CHAINID!
+const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID!
 export default function Exchange({chainId}:{chainId:any}){
     let address
     if(chainId?.toString()==bscID){
