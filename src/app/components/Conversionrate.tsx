@@ -42,7 +42,6 @@ const polyID = process.env.NEXT_PUBLIC_BSC_CHAINID!
              showbalance = formatEther(balance)
             }
           }
-      
         return (
           <div>{showbalance}</div>
         )
