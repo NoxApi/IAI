@@ -1,49 +1,24 @@
-"use client";
-import Image from "next/image";
-import IAI from "../../svg/IAI";
-import Usdt from "../../svg/Usdt";
-import { useEffect, useState } from "react";
-import IAI2 from "../../svg/IAI2";
+"use client"
+import ChainSwitchButton from "./components/ChainSwitchButton";
+import Exchange from "./components/Exchange";
+import BuyIAI from "./components/BuyIAI";
+import ConversionRatePolygon from "./components/Conversionrate";
+import Navbar from "./components/Navbar";
+import { Footer } from "./components/Footer";
 import { useAccount } from "wagmi";
-import ChainSwitchButton from "./components/ChainSwitchBotton";
+import BuyIAIPolygon from "./components/BuyIAI";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [ChainID,setChainID] = useState<any>(null);
-  const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
-  const [usdAmount, setUsdAmount] = useState<number | null>(0); // Amount in USD
+  const [localaddress,setlocaladdress] = useState<any>("")
+  const {chainId,address} = useAccount()
   const conversionRate = 0.016; // 1 $IAI = $0.016
-  
-
-  // Handle changes in $IAI input
-  const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // Allow empty input but convert valid numbers
-    const numberValue = parseFloat(value);
-    if (value === "" || (!isNaN(numberValue) && numberValue >= 0)) {
-      setIaiAmount(value === "" ? null : numberValue);
-      setUsdAmount(value === "" ? null : numberValue * conversionRate);
-    }
-  };
-  
-  const handleUsdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // Allow empty input but convert valid numbers
-    const numberValue = parseFloat(value);
-    if (value === "" || (!isNaN(numberValue) && numberValue >= 0)) {
-      setUsdAmount(value === "" ? null : numberValue);
-      setIaiAmount(value === "" ? null : numberValue / conversionRate);
-    }
-  };
-
-  const handleMaxClick = () => {
-    setUsdAmount(usdAmount);
-  };
-  // const [multiplyPrice, setMultiplyPrice] = useState(0); setMultiplyPrice(Number(inputValue) * 250);
+  //todo
+  console.log("refreshed")
   return (
+    <>
+    <Navbar/>
     <div className="h-[100vh] w-full flex flex-col justify-center items-center  ">
-      {/* bg-[#6D15CC] */}
       <main className="max-w-[1360px] w-full h-[100vh] flex flex-col items-center px-10 smm:px-[5vw] pt-[100px] pb-[80px] smm:pt-0">
         <div className="flex flex-col gap-y-[10px] items-center ">
           <h1 className="fontNasalization text-[67px] text-[#F7F7FA] smm:text-[44px]">
@@ -65,61 +40,15 @@ export default function Home() {
               <h4 className="fontmonters text-[24px] text-white font-bold">
                 Buy $IAI
               </h4>
-              <h5 className="fontOpen text-[14px] text-white">
-                1 $IAI = $0.025
-              </h5>
             </div>
             <ChainSwitchButton/>
           </div>
-          <div className="flex flex-col gap-y-6">
-            <div className="flex flex-col gap-y-1">
-              <h5 className="fontIter text-[14px] text-white">
-                Pay with - USDT
-              </h5>
-              <div className="w-full bg-white flex gap-x-3 py-[10px] px-3 rounded-md ">
-                <div className="flex gap-x-2 flex-1 items-center">
-                  <Usdt width="24" height="24" className={""} />
-                  <input
-                    type="number"
-                    className="flex-1 outline-none"
-                    placeholder="0"
-                    value={usdAmount ?? ""}
-                    onChange={()=>{handleUsdChange}}
-                  />
-                </div>
-                <button onClick={()=>{handleMaxClick}}>
-                  <h5 className="fontIter text-[14px] text-[#6D15CC]">MAX</h5>
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-col gap-y-1">
-              <h5 className="fontIter text-[14px] text-white">Receive $IAI</h5>
-              <div className="w-full bg-white flex gap-x-3 py-[10px] px-3 rounded-md">
-                <div className="flex gap-x-2 flex-1 items-center">
-                  <IAI2 width={20} height={20} className={"fill-white"} />
-                  <input
-                    type="number"
-                    className="flex-1 outline-none"
-                    placeholder="0"
-                    value={iaiAmount ?? ""}
-                    onChange={()=>{handleIaiChange}}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          {usdAmount !== undefined && usdAmount !== null && usdAmount <= 0 && (
-            <>
-              <h6 className="text-red-400 text-[12px]">
-                your credit is not Enough
-              </h6>
-            </>
-          )}
-          <button className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
-            Buy $IAI
-          </button>
+          {chainId&&<Exchange chainId={chainId}/>}
+          {chainId&&<BuyIAI/>} 
         </div>
       </main>
     </div>
+    <Footer/>
+    </>
   );
 }

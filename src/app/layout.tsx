@@ -1,21 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import { Footer } from "./components/Footer";
 import ContextProvider from "./context";
-import { headers } from 'next/headers'
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
+import { GlobalContext, GlobalProvider } from "./components/state/Global";
 const monters = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
@@ -41,17 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain`}
       >
+        
         <ContextProvider>
-          <Navbar />
+          <GlobalProvider>
             {children}
-          <Footer />
+            </GlobalProvider>   
         </ContextProvider>
-      </body>
-      
+      </body>    
     </html>
   );
 }

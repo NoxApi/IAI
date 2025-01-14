@@ -27,27 +27,9 @@ const metadata = {
     adapters: [wagmiAdapter],
     projectId,
     networks: [bscTestnet,polygonAmoy],
-    defaultNetwork: bscTestnet,
+    defaultNetwork: polygonAmoy,
     metadata: metadata,
   })
-
-
-  // createAppKit({
-  //   adapters: [wagmiAdapter],
-  //   projectId,
-  //   networks: [polygon,bsc],
-  //   defaultNetwork: bsc,
-  //   metadata: metadata,
-  //   features: {
-  //     connectMethodsOrder: ['wallet'],
-  //   },
-  //   featuredWalletIds: [
-  //     'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96'
-  //   ],
-  //   allWallets: 'HIDE',
-  //   enableCoinbase:false,
-  //   enableWalletConnect: false
-  // })
 
 
 function ContextProvider({ children }: { children: ReactNode;}) {

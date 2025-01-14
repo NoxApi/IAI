@@ -12,19 +12,8 @@ export const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({
     storage: cookieStorage
   }),
-  ssr: false,
+  ssr: true,
   projectId,
   networks
 })
-
-// export const networks = [polygon,bsc]
-// export const wagmiAdapter = new WagmiAdapter({
-//   storage: createStorage({
-//     storage: cookieStorage
-//   }),
-//   ssr: false,
-//   projectId,
-//   networks
-// })
-
 export const config = wagmiAdapter.wagmiConfig
