@@ -6,13 +6,10 @@ import ConversionRatePolygon from "./components/Conversionrate";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { useAccount } from "wagmi";
-import BuyIAIPolygon from "./components/BuyIAI";
-import { useEffect, useState } from "react";
+import { useReadContract } from "wagmi";
 
 export default function Home() {
   const {chainId,address} = useAccount()
-  //todo
-  console.log("refreshed")
   return (
     <>
     <Navbar/>
