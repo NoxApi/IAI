@@ -1,7 +1,7 @@
 import IAI2 from "../../../../svg/IAI2"
 const Balance = ({balance}:{balance: number}) => {
   function numberaltered(amount: any) {
-    const x = parseFloat(amount).toFixed(3)
+    const x = parseFloat(amount).toFixed(2)
     const y = x.toString()
     let amountaltered = "";
     if (amount) {

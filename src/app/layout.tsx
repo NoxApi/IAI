@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "IAI.CENTER",
+  title: "IAI.PRESALE",
   description: "IAI",
   }
 

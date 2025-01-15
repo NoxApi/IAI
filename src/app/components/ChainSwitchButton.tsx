@@ -8,7 +8,8 @@ import Bcs from "../../../svg/Bcs";
 import Wallet from "../../../svg/Wallet";
 import { useEffect, useState } from "react";
 //todo change chain ID
-const polyID = process.env.NEXT_PUBLIC_POLYGON_CHAINID!
+const polyID = process.env.NEXT_PUBLIC_POLYGON_CHAINID
+const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID
 export default function ChainSwitchButton() {
     const [chainID,setchainID] = useState<any>(null)
     const {chainId } = useAccount();
@@ -46,10 +47,10 @@ export default function ChainSwitchButton() {
                 onClick={()=>{SwitchNetwork()}}
                 >
        
-                {chainId?(
+                {chainID?(
                     <>
-                        {(chainID==97||chainID==80002) ? 
-                        (chainID==97) ?(
+                        {(chainID.toString()==bscID||chainID.toString()==polyID) ? 
+                        (chainID.toString()==bscID) ?(
                             <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
                                 <Bcs width="24" height="24" className={"fill-white"} />
                                 <h5 className="fontmonters text-[16px] text-white capitalize">

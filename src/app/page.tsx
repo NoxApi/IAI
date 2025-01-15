@@ -2,7 +2,7 @@
 import ChainSwitchButton from "./components/ChainSwitchButton";
 import Exchange from "./components/Exchange";
 import BuyIAI from "./components/BuyIAI";
-import ConversionRatePolygon from "./components/Conversionrate";
+import Link from "next/link";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { useAccount } from "wagmi";
@@ -10,10 +10,10 @@ import { useReadContract } from "wagmi";
 import { contractABI } from "./contracts/IAI";
 import { ERC20contractABI } from "./contracts/ERC20";
 import { formatEther,formatUnits } from 'ethers';
-import TotalPurchased from "./components/TotalPurchased";
-import IAI2 from "../../svg/IAI2";
+
 import ModalController from "./components/Modal/ModalController";
 import { useAppKit } from "@reown/appkit/react";
+import Book from "../../svg/Book";
 const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!
 const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!
 const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID!
@@ -132,6 +132,21 @@ export default function Home() {
            </div>} 
         </div>
       </main>
+      {/* add hyperlink */}
+      <Link
+            href={
+              "https://medium.com/@iai.center.allconnex/iai-token-pre-sale-instruction-manual-ce3283dfd2c8"
+            }
+            target={"_blank"}
+          >
+            <div className="flex gap-2 items-center mt-6 cursor-pointer">
+              <Book width="20" height="20" className={"fill-white"} />
+              <h5 className=" text-[16px] fontmonters text-white ">
+                How to Buy $iAI
+              </h5>
+            </div>
+          </Link>
+          {/* add hyperlink */}
     </div>
     <Footer/>
     </>
