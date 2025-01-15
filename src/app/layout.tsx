@@ -3,6 +3,8 @@ import { Inter, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import ContextProvider from "./context";
 import { GlobalProvider } from "./components/state/Global";
+import Head from "next/head";
+
 const monters = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
@@ -19,6 +21,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "IAI.PRESALE",
   description: "IAI",
+  icons: {
+    icon: '/favicon.ico',
+  },
   }
 
 export default function RootLayout({
@@ -28,16 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32" />
-      </head>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain  `}
       >
         <ContextProvider>
           <GlobalProvider>
             {children}
-            </GlobalProvider>   
+          </GlobalProvider>   
         </ContextProvider>
       </body>    
     </html>
