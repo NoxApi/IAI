@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32" />
+      </head>
       <body
         className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain  `}
       >

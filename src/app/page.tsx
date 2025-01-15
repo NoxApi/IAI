@@ -131,22 +131,20 @@ export default function Home() {
            </button>
            </div>} 
         </div>
-      </main>
-      {/* add hyperlink */}
-      <Link
-            href={
-              "https://medium.com/@iai.center.allconnex/iai-token-pre-sale-instruction-manual-ce3283dfd2c8"
-            }
-            target={"_blank"}
-          >
-            <div className="flex gap-2 items-center mt-6 mb-6 cursor-pointer">
-              <Book width="20" height="20" className={"fill-white"} />
-              <h5 className=" text-[16px] fontmonters text-white ">
-                How to Buy $iAI
-              </h5>
+        <div className="flex gap-2 items-center mt-2 mb-6 cursor-pointer">
+              <Link className="flex gap-2 items-center mt-2 mb-6 cursor-pointer"
+              href={
+                "https://medium.com/@iai.center.allconnex/iai-token-pre-sale-instruction-manual-ce3283dfd2c8"
+              }
+              target={"_blank"}
+            >
+                <Book width="20" height="20" className={"fill-white"} />
+                <h5 className=" text-[16px] fontmonters text-white ">
+                  How to Buy $iAI
+                </h5>
+                </Link>
             </div>
-          </Link>
-          {/* add hyperlink */}
+      </main>
     </div>
     <Footer/>
     </>
