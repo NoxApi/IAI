@@ -6,15 +6,10 @@ import  {ERC20contractABI}  from '../contracts/ERC20'
 import { parseEther } from 'ethers';
 import { useGlobalContext } from './state/Global';
 import { formatEther,parseUnits,formatUnits } from 'ethers';
-const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID
-export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetchaia}:{Allowance:any,USDTAddress:any,IAIAddress:any,refetch:any,refetchaia:any}){
+
+export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetchaia,refetchUSDT,MaxUSDT,unit}:{Allowance:any,USDTAddress:any,IAIAddress:any,refetch:any,refetchaia:any,refetchUSDT:any,MaxUSDT:any,unit:any}){
     const [Switch,setSwitch] = useState(true)
-    const {chainId}= useAccount()!
     const {USDTAmount,setOpenmodal}=useGlobalContext()!
-    let unit = 6
-    if(chainId==bscID){
-      unit = 18
-    }
     const { writeContract,isPending,isError,error,data: hash } = useWriteContract()
     async function submit() { 
         setSwitch(true)
@@ -31,7 +26,7 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetch
           address: USDTAddress,
           abi:ERC20contractABI,
           functionName: 'approve',
-          args: [IAIAddress,parseUnits(USDTAmount.toString(),unit)],
+          args: [IAIAddress,USDTAmount.toString()],
         })
       } 
       const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -57,19 +52,31 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetch
          setOpenmodal("Success")
          if(Switch){
           refetchaia()
+          refetchUSDT()
          }
          else{
           refetch()
          }
          setTimeout(Closemodal,3000)
         }
-        if(isError){
+        else{
+          setOpenmodal("")
+        }
+        if(isError||error){
           setOpenmodal("")
         }
       },[isConfirming,isConfirmed,isPending,isError])
     return(
-        <>
-          <div className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
+      <div className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
+          {USDTAmount>MaxUSDT?
+          (
+            <button className='w-full h-full'>
+            Not Enough USDT
+            </button>
+          )
+          :
+          (
+            <>
               {Allowance>=USDTAmount?
               <button className='w-full h-full' onClick={()=>{
                 if(isConfirming==false){
@@ -87,7 +94,8 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetch
               {isConfirming?("Transaction Processing"):(isPending ? 'Processing...' : ' Approve')}
               </button>
               }
-          </div>
-        </>
+          </>
+        )}
+    </div>
     )
 }

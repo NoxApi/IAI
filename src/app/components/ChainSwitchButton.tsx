@@ -44,15 +44,36 @@ export default function ChainSwitchButton() {
                 className=" border border-[#6D15CC] rounded-lg"
                 onClick={()=>{SwitchNetwork()}}
                 >
-                {(chainID==97||chainID==80002) ? (
+       
+                {chainId?(
                     <>
-                    {(chainID==97) ?(<button className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                    <Bcs width="24" height="24" className={"fill-white"} />
-                    <h5 className="fontmonters text-[16px] text-white capitalize">
-                        {"Binance"}
-                    </h5>
-                    <Switch width="21" height="20" className={""} />
-                    </button>)
+                        {(chainID==97||chainID==80002) ? 
+                        (chainID==97) ?(
+                            <button className="px-[12px] flex gap-x-2 h-[46px] items-center">
+                                <Bcs width="24" height="24" className={"fill-white"} />
+                                <h5 className="fontmonters text-[16px] text-white capitalize">
+                                    {"Binance"}
+                                </h5>
+                                <Switch width="21" height="20" className={""} />
+                            </button>)
+                        :
+                            <button onClick={()=>{SwitchNetwork()}} className="px-[12px] flex gap-x-2 h-[46px] items-center">
+                            <Polygon width="24" height="24" className={"fill-white"} />
+                            <h5 className="fontmonters text-[16px] text-white capitalize">
+                                {"Polygon"}
+                            </h5>
+                            <Switch width="21" height="20" className={""} />
+                            </button>
+                        : (
+                        <button onClick={()=>{SwitchNetwork()}}  className="px-[12px] flex gap-x-2 h-[46px] items-center">
+                        <Polygon width="21" height="20" className={"fill-white"} />
+                        <h5 className="fontmonters text-[16px] text-white">
+                            {"Unsupported Network"}
+                        </h5>
+                        <Switch width="21" height="20" className={""} />
+                        </button>
+                        )}
+                    </>)
                     :
                     (<button onClick={()=>{SwitchNetwork()}} className="px-[12px] flex gap-x-2 h-[46px] items-center">
                     <Polygon width="24" height="24" className={"fill-white"} />
@@ -60,17 +81,9 @@ export default function ChainSwitchButton() {
                         {"Polygon"}
                     </h5>
                     <Switch width="21" height="20" className={""} />
-                    </button>)}
-                    </>
-                ) : (
-                    <button onClick={()=>{SwitchNetwork()}}  className="px-[12px] flex gap-x-2 h-[46px] items-center">
-                    <Polygon width="21" height="20" className={"fill-white"} />
-                    <h5 className="fontmonters text-[16px] text-white">
-                        {"Unsupported Network"}
-                    </h5>
-                    <Switch width="21" height="20" className={""} />
                     </button>
-                )}
-                </div>
+                    )
+                }
+           </div>
         )
     }

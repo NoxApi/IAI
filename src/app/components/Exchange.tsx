@@ -11,7 +11,7 @@ const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS
 const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID
 const polyUSDT = process.env.NEXT_PUBLIC_POLYGON_USDT_ADDRESS
 const bscUSDT = process.env.NEXT_PUBLIC_BSC_USDT_ADDRESS
-export default function Exchange({chainId,useraddress}:{chainId:any,useraddress:any}){
+export default function Exchange({chainId,useraddress,MaxUSDT}:{chainId:any,useraddress:any,MaxUSDT:any}){
     let address
     let USDT
     let unit = 0
@@ -31,14 +31,9 @@ export default function Exchange({chainId,useraddress}:{chainId:any,useraddress:
     abi:contractABI,
     functionName: 'tokenPrice',
   })
-  const { data:USDTamount,error:errorfetchUSDT,isPending:isUSDTpening} = useReadContract({
-    address:USDT as `0x${string}`,
-    abi:ERC20contractABI,
-    functionName: 'balanceOf',
-    args: [useraddress]
-  })
+  
   const [iaiAmount, setIaiAmount] = useState<number | null>(0); // Amount in $IAI
-  const {USDTAmount,setUSDTAmount,MaxUSDT} = useGlobalContext()!
+  const {USDTAmount,setUSDTAmount} = useGlobalContext()!
   // Handle changes in $IAI input
 
   if(price){
@@ -75,10 +70,9 @@ const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
 }
   const handleMaxClick = () => {
-    console.log(USDTamount)
-    if(USDTamount){
-      if(typeof(USDTamount)=="bigint"){
-      setUSDTAmount(formatUnits(USDTamount,unit));
+    if(MaxUSDT){
+      if(typeof(MaxUSDT)=="bigint"){
+      setUSDTAmount(MaxUSDT);
       }
     }
   };

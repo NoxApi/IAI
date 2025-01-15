@@ -13,6 +13,7 @@ import { formatEther,formatUnits } from 'ethers';
 import TotalPurchased from "./components/TotalPurchased";
 import IAI2 from "../../svg/IAI2";
 import ModalController from "./components/Modal/ModalController";
+import { useAppKit } from "@reown/appkit/react";
 const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!
 const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!
 const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID!
@@ -21,7 +22,7 @@ const bscUSDT = process.env.NEXT_PUBLIC_BSC_USDT_ADDRESS
 const polyiaitoken = process.env.NEXT_PUBLIC_POLYGON_IAI_TOKEN 
 const bsciaitoken = process.env.NEXT_PUBLIC_BSC_IAI_TOKEN 
 export default function Home() {
-  const avaliableIAI = 1000000
+ 
   let IAIbalance = "0"
   let Allowance = "0"
   let unit = 18
@@ -51,18 +52,28 @@ export default function Home() {
         functionName: 'allowance',
         args: [address, IAIContractAddress],
   })
-      if(IAIBalance){
-        if(typeof(IAIBalance)=="bigint"){
-          IAIbalance= formatEther(IAIBalance)
-        }
-      }
-      if(allowance){
-        if(typeof(allowance)=="bigint"){
-          Allowance= formatUnits(allowance,unit)
-          console.log(Allowance)
-        }
-      }
-
+  const { data:USDTamount,refetch:refetchUSDT} = useReadContract({
+      address:USDTContractAdress as `0x${string}`,
+      abi:ERC20contractABI,
+      functionName: 'balanceOf',
+      args: [address]
+    })
+  if(IAIBalance){
+    if(typeof(IAIBalance)=="bigint"){
+      IAIbalance= formatEther(IAIBalance)
+    }
+  }
+  if(allowance){
+    if(typeof(allowance)=="bigint"){
+      Allowance= formatUnits(allowance,unit)
+    }
+  }
+  if(USDTamount){
+    if(typeof(USDTamount)=="bigint"){
+      Allowance= formatUnits(USDTamount,unit)
+    }
+  }
+  const { open } = useAppKit()
   
   return (
     <>
@@ -111,8 +122,13 @@ export default function Home() {
             </div>
             <ChainSwitchButton/>
           </div>
-          <Exchange chainId={chainId} useraddress={address}/>
-          {chainId&&<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai}/>} 
+          <Exchange chainId={chainId} useraddress={address} MaxUSDT={USDTamount}/>
+          {chainId?(<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai} MaxUSDT={USDTamount} refetchUSDT={refetchUSDT} unit={unit}/> ):
+           <div className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
+           <button className='w-full h-full' onClick={()=>{open}}>
+              Connect Wallet
+           </button>
+           </div>} 
         </div>
       </main>
     </div>
