@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import { polygon,bsc, bscTestnet, polygonAmoy} from '@reown/appkit/networks'
+import { polygon,bsc} from '@reown/appkit/networks'
 import { createAppKit } from '@reown/appkit'
 import { wagmiAdapter, projectId } from '../config'
 import Polygon from "../../../svg/Polygon";
@@ -8,6 +8,7 @@ import Bcs from "../../../svg/Bcs";
 import Wallet from "../../../svg/Wallet";
 import { useEffect, useState } from "react";
 //todo change chain ID
+const polyID = process.env.NEXT_PUBLIC_POLYGON_CHAINID!
 export default function ChainSwitchButton() {
     const [chainID,setchainID] = useState<any>(null)
     const {chainId } = useAccount();
@@ -20,17 +21,17 @@ export default function ChainSwitchButton() {
         const modal = createAppKit({
             adapters: [wagmiAdapter],
             projectId,
-            networks: [bscTestnet,polygonAmoy],
-            defaultNetwork: bscTestnet,
+            networks: [bsc,polygon],
+            defaultNetwork: polygon,
             metadata: metadata,
         })
         function SwitchNetwork(){
-            if(chainId==80002){
-            modal.switchNetwork(bscTestnet)
+            if(chainId?.toString()==polyID){
+            modal.switchNetwork(bsc)
             window.location.reload();
             }
             else{
-            modal.switchNetwork(polygonAmoy)
+            modal.switchNetwork(polygon)
             window.location.reload();
             }
         }

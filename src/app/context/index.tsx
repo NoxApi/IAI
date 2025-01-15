@@ -3,7 +3,7 @@
 import { wagmiAdapter, projectId } from './../config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createAppKit } from '@reown/appkit/react' 
-import { bsc,polygon,polygonAmoy,bscTestnet } from '@reown/appkit/networks'
+import { bsc,polygon } from '@reown/appkit/networks'
 import React, { type ReactNode } from 'react'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 
@@ -16,8 +16,8 @@ if (!projectId) {
 // Set up metadata
 const metadata = {
   name: "IAI",
-  description: "Evermoon Social-Fi",
-  url: "https://testnet.evermoon.games",
+  description: "IAI Presale",
+  url: "https://presale.iai.center",
   icons: [""],
 };
 
@@ -26,8 +26,8 @@ const metadata = {
   createAppKit({
     adapters: [wagmiAdapter],
     projectId,
-    networks: [bscTestnet,polygonAmoy],
-    defaultNetwork: polygonAmoy,
+    networks: [bsc,polygon],
+    defaultNetwork: polygon,
     metadata: metadata,
   })
 

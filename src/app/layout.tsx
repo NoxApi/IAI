@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import ContextProvider from "./context";
-import { GlobalContext, GlobalProvider } from "./components/state/Global";
+import { GlobalProvider } from "./components/state/Global";
 const monters = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
