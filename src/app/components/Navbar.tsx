@@ -41,7 +41,7 @@ const Navbar = ({IAIbalance}:{IAIbalance:any}) => {
         {localaddress?
           (<button onClick={()=>(disconnect())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters">
             <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
-            {localaddress}
+            {localaddress.slice(0,6)+"..."+localaddress.slice(-4)}
           </h6>
           </button >)
           :

@@ -139,7 +139,7 @@ export default function Home() {
             }
             target={"_blank"}
           >
-            <div className="flex gap-2 items-center mt-6 cursor-pointer">
+            <div className="flex gap-2 items-center mt-6 mb-6 cursor-pointer">
               <Book width="20" height="20" className={"fill-white"} />
               <h5 className=" text-[16px] fontmonters text-white ">
                 How to Buy $iAI
