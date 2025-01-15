@@ -25,6 +25,7 @@ export default function Home() {
  
   let IAIbalance = "0"
   let Allowance = "0"
+  let USDTAmount = "0"
   let unit = 18
   const {chainId,address} = useAccount()
   let IAIContractAddress = polyaddress
@@ -70,7 +71,7 @@ export default function Home() {
   }
   if(USDTamount){
     if(typeof(USDTamount)=="bigint"){
-      Allowance= formatUnits(USDTamount,unit)
+      USDTAmount= formatUnits(USDTamount,unit)
     }
   }
   const { open } = useAppKit()
@@ -123,9 +124,9 @@ export default function Home() {
             <ChainSwitchButton/>
           </div>
           <Exchange chainId={chainId} useraddress={address} MaxUSDT={USDTamount}/>
-          {chainId?(<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai} MaxUSDT={USDTamount} refetchUSDT={refetchUSDT} unit={unit}/> ):
+          {chainId?(<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai} MaxUSDT={USDTAmount} refetchUSDT={refetchUSDT} unit={unit}/> ):
            <div className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
-           <button className='w-full h-full' onClick={()=>{open}}>
+           <button className='w-full h-full' onClick={()=>{open()}}>
               Connect Wallet
            </button>
            </div>} 

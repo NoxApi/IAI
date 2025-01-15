@@ -26,7 +26,7 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetch
           address: USDTAddress,
           abi:ERC20contractABI,
           functionName: 'approve',
-          args: [IAIAddress,USDTAmount.toString()],
+          args: [IAIAddress,parseUnits(USDTAmount.toString(),unit)],
         })
       } 
       const { isLoading: isConfirming, isSuccess: isConfirmed } =
