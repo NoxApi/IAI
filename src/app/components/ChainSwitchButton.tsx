@@ -42,11 +42,9 @@ export default function ChainSwitchButton() {
             }
         },[chainId])
     return(
-        <div
-                className=" border border-[#6D15CC] rounded-lg"
+        <div className=" border border-[#6D15CC] rounded-lg"
                 onClick={()=>{SwitchNetwork()}}
                 >
-       
                 {chainID?(
                     <>
                         {(chainID.toString()==bscID||chainID.toString()==polyID) ? 
