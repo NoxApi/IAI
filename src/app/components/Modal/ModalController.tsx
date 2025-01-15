@@ -13,7 +13,7 @@ const ModalController = () => {
       {openmodal == "Success" && <DBprocessing />}
       {openmodal == "Waiting" && <Refreshing />}
       {/* add modal copyTokenAddress */}
-      {openmodal == "CopyTokenAddress" && <Error />}
+      {openmodal == "Error" && <Error />}
       {/* add modal copyTokenAddress */}
     </>
   );

@@ -57,13 +57,14 @@ export default function BuyIAI({Allowance,USDTAddress,IAIAddress,refetch,refetch
          else{
           refetch()
          }
-         setTimeout(Closemodal,3000)
+         setTimeout(Closemodal,2000)
         }
         else{
           setOpenmodal("")
         }
         if(isError||error){
-          setOpenmodal("")
+          setOpenmodal("Error")
+          setTimeout(Closemodal,2000)
         }
       },[isConfirming,isConfirmed,isPending,isError])
     return(
