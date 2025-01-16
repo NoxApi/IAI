@@ -71,9 +71,7 @@ const handleIaiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 }
   const handleMaxClick = () => {
     if(MaxUSDT){
-      if(typeof(MaxUSDT)=="bigint"){
       setUSDTAmount(MaxUSDT);
-      }
     }
   };
     return(
