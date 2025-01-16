@@ -123,7 +123,7 @@ export default function Home() {
             </div>
             <ChainSwitchButton/>
           </div>
-          <Exchange chainId={chainId} useraddress={address} MaxUSDT={USDTamount}/>
+          <Exchange chainId={chainId} useraddress={address} MaxUSDT={USDTAmount}/>
           {chainId?(<BuyIAI Allowance={Allowance} USDTAddress={USDTContractAdress} IAIAddress={IAIContractAddress} refetch={refetchallownace} refetchaia={refetchIai} MaxUSDT={USDTAmount} refetchUSDT={refetchUSDT} unit={unit}/> ):
            <div className="px-6 py-4 fontmonters text-[16px] text-white bg-[#6D15CC] w-fit rounded-lg mx-auto">
            <button className='w-full h-full' onClick={()=>{open()}}>
