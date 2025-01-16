@@ -22,27 +22,26 @@ export const metadata: Metadata = {
   title: "IAI.PRESALE",
   description: "IAI",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
-  }
+};
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body
-        className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain  `}
+        // edit for responsive + for fix
+        className={` ${monters.variable} ${openSans.variable} ${inter.variable} antialiased bgmain min-h-[100vh] grow flex flex-col`}
       >
         <ContextProvider>
-          <GlobalProvider>
-            {children}
-          </GlobalProvider>   
+          <GlobalProvider>{children}</GlobalProvider>
         </ContextProvider>
-      </body>    
+      </body>
     </html>
   );
 }

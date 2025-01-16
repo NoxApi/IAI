@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import IAI from "../../../svg/IAI";
 import Wallet from "../../../svg/Wallet";
@@ -8,19 +8,18 @@ import { useEffect, useState } from "react";
 import NewLogo from "../../../svg/NewLogo";
 import Balance from "./Navbarcomponents/Balance";
 
-const Navbar = ({IAIbalance}:{IAIbalance:any}) => {
-  const { open } = useAppKit()
-  const { disconnect } = useDisconnect()
-   const { address } = useAccount()
-   const [localaddress,setlocaladdress] = useState<any>(null)
-   useEffect(()=>{
-    if(address){
-      setlocaladdress(address)
-    } 
-    else{
-      setlocaladdress(null)
+const Navbar = ({ IAIbalance }: { IAIbalance: any }) => {
+  const { open } = useAppKit();
+  const { disconnect } = useDisconnect();
+  const { address } = useAccount();
+  const [localaddress, setlocaladdress] = useState<any>(null);
+  useEffect(() => {
+    if (address) {
+      setlocaladdress(address);
+    } else {
+      setlocaladdress(null);
     }
-   },[address])
+  }, [address]);
   return (
     <header className="w-full bg-[#11111199] flex justify-center px-[50px] py-[12px] smm:px-[8.125vw] ">
       <nav className="max-w-[1360px] w-full flex justify-between items-center">
@@ -37,24 +36,38 @@ const Navbar = ({IAIbalance}:{IAIbalance:any}) => {
           <IAI width="121" height="15" className={"fill-white smm:hidden "} />
         </div>
         <div className="flex gap-1 items-center">
-        <Balance balance={IAIbalance}/>
-        {localaddress?
-          (<button onClick={()=>(disconnect())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters">
-            <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
-            {localaddress.slice(0,6)+"..."+localaddress.slice(-4)}
-          </h6>
-          </button >)
-          :
-          (<button onClick={()=>(open())} className="px-[20px] py-2 bg-[#6D15CC] rounded-lg  fontmonters ">
-          <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
-            Connect Wallet
-          </h6>
-          <Wallet
-            width="20"
-            height="18"
-            className={`fill-white xl:hidden lg:hidden md:hidden`}
-          />
-        </button>)}
+          <Balance balance={IAIbalance} />
+          {localaddress ? (
+            <button
+              onClick={() => disconnect()}
+              // edit for responsive
+              className="px-[20px] py-3 bg-[#6D15CC] rounded-lg  fontmonters mdm:px-[14px] mdm:py-[10px]"
+            >
+              <h6 className="text-[16px] text-[#F7F7FA] smm:hidden">
+                {localaddress.slice(0, 6) + "..." + localaddress.slice(-4)}
+              </h6>
+              <Wallet
+                width="20"
+                height="18"
+                className={`fill-white xl:hidden lg:hidden md:hidden`}
+              />
+            </button>
+          ) : (
+            <button
+              onClick={() => open()}
+              // edit for responsive
+              className="px-[20px] py-3 bg-[#6D15CC] rounded-lg  fontmonters mdm:px-[14px] mdm:py-[10px]"
+            >
+              <h6 className="text-[16px] text-[#F7F7FA] mdm:hidden">
+                Connect Wallet
+              </h6>
+              <Wallet
+                width="20"
+                height="18"
+                className={`fill-white xl:hidden lg:hidden md:hidden`}
+              />
+            </button>
+          )}
         </div>
       </nav>
     </header>
