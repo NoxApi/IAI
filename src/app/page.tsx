@@ -14,7 +14,7 @@ import { formatEther, formatUnits } from "ethers";
 import ModalController from "./components/Modal/ModalController";
 import { useAppKit } from "@reown/appkit/react";
 import Book from "../../svg/Book";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Warning from "../../svg/Warning";
 const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!;
 const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!;
@@ -42,7 +42,6 @@ export default function Home() {
 
   // add state is for wallet registration
   const [isRegis, setIsRegis] = useState(true);
-
   const {
     data: IAIBalance,
     error: IAIBalanceerror,
@@ -67,6 +66,12 @@ export default function Home() {
     functionName: "balanceOf",
     args: [address],
   });
+  const { data: isWhitelist, refetch: refetchwhitelist } = useReadContract({
+    address: IAIContractAddress as `0x${string}`,
+    abi: contractABI,
+    functionName: "isWhitelisted",
+    args: [address],
+  });
   if (IAIBalance) {
     if (typeof IAIBalance == "bigint") {
       IAIbalance = formatEther(IAIBalance);
@@ -83,7 +88,14 @@ export default function Home() {
     }
   }
   const { open } = useAppKit();
+  useEffect(()=>{
+  if(typeof(isWhitelist) == "boolean")
+    setIsRegis(isWhitelist);
+  },[isWhitelist])
 
+  useEffect(()=>{
+    refetchwhitelist()
+  },[address])
   return (
     <>
       <Navbar IAIbalance={IAIbalance} />

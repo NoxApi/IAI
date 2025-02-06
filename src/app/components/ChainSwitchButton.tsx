@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import { polygon,bsc} from '@reown/appkit/networks'
+import { polygon,bsc,bscTestnet,polygonAmoy} from '@reown/appkit/networks'
 import { createAppKit } from '@reown/appkit'
 import { wagmiAdapter, projectId } from '../config'
 import Polygon from "../../../svg/Polygon";
@@ -19,20 +19,22 @@ export default function ChainSwitchButton() {
             url: "https://testnet.evermoon.games",
             icons: [""],
         };
+        //todo change to mainnet
         const modal = createAppKit({
             adapters: [wagmiAdapter],
             projectId,
-            networks: [bsc,polygon],
+            networks: [bscTestnet,polygonAmoy],
             defaultNetwork: polygon,
             metadata: metadata,
         })
+        //todo change to mainnet
         function SwitchNetwork(){
             if(chainId?.toString()==polyID){
-            modal.switchNetwork(bsc)
+            modal.switchNetwork(bscTestnet)
             window.location.reload();
             }
             else{
-            modal.switchNetwork(polygon)
+            modal.switchNetwork(polygonAmoy)
             window.location.reload();
             }
         }
