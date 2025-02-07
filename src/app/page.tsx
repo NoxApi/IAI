@@ -72,6 +72,14 @@ export default function Home() {
     functionName: "isWhitelisted",
     args: [address],
   });
+
+  
+  const { data: isWhitelistenable, refetch: refetchwhitelistenable } = useReadContract({
+    address: IAIContractAddress as `0x${string}`,
+    abi: contractABI,
+    functionName: "isWhitelistEnabled",
+    args: [],
+  });
   if (IAIBalance) {
     if (typeof IAIBalance == "bigint") {
       IAIbalance = formatEther(IAIBalance);
@@ -89,12 +97,19 @@ export default function Home() {
   }
   const { open } = useAppKit();
   useEffect(()=>{
-  if(typeof(isWhitelist) == "boolean")
-    setIsRegis(isWhitelist);
-  },[isWhitelist])
-
+    console.log(isWhitelist,isWhitelistenable)
+  if(typeof(isWhitelist) == "boolean"&&typeof(isWhitelistenable) == "boolean"){
+      if(isWhitelistenable==true&&isWhitelist==false){
+        setIsRegis(false);
+      }
+      else{
+        setIsRegis(true);
+      }
+    } 
+  },[isWhitelist,isWhitelistenable])
   useEffect(()=>{
     refetchwhitelist()
+    refetchwhitelistenable ()
   },[address])
   return (
     <>
