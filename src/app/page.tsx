@@ -14,6 +14,8 @@ import { formatEther, formatUnits } from "ethers";
 import ModalController from "./components/Modal/ModalController";
 import { useAppKit } from "@reown/appkit/react";
 import Book from "../../svg/Book";
+import { useEffect, useState } from "react";
+import Warning from "../../svg/Warning";
 const bscaddress = process.env.NEXT_PUBLIC_BSC_IAI_ADDRESS!;
 const polyaddress = process.env.NEXT_PUBLIC_POLYGON_IAI_ADDRESS!;
 const bscID = process.env.NEXT_PUBLIC_BSC_CHAINID!;
@@ -38,6 +40,8 @@ export default function Home() {
     unit = 6;
   }
 
+  // add state is for wallet registration
+  const [isRegis, setIsRegis] = useState(true);
   const {
     data: IAIBalance,
     error: IAIBalanceerror,
@@ -62,6 +66,20 @@ export default function Home() {
     functionName: "balanceOf",
     args: [address],
   });
+  const { data: isWhitelist, refetch: refetchwhitelist } = useReadContract({
+    address: IAIContractAddress as `0x${string}`,
+    abi: contractABI,
+    functionName: "isWhitelisted",
+    args: [address],
+  });
+
+  
+  const { data: isWhitelistenable, refetch: refetchwhitelistenable } = useReadContract({
+    address: IAIContractAddress as `0x${string}`,
+    abi: contractABI,
+    functionName: "isWhitelistEnabled",
+    args: [],
+  });
   if (IAIBalance) {
     if (typeof IAIBalance == "bigint") {
       IAIbalance = formatEther(IAIBalance);
@@ -78,7 +96,21 @@ export default function Home() {
     }
   }
   const { open } = useAppKit();
-
+  useEffect(()=>{
+    console.log(isWhitelist,isWhitelistenable)
+  if(typeof(isWhitelist) == "boolean"&&typeof(isWhitelistenable) == "boolean"){
+      if(isWhitelistenable==true&&isWhitelist==false){
+        setIsRegis(false);
+      }
+      else{
+        setIsRegis(true);
+      }
+    } 
+  },[isWhitelist,isWhitelistenable])
+  useEffect(()=>{
+    refetchwhitelist()
+    refetchwhitelistenable ()
+  },[address])
   return (
     <>
       <Navbar IAIbalance={IAIbalance} />
@@ -96,7 +128,12 @@ export default function Home() {
             <h3 className="bgtext mx-auto text-[22px] fontmonters italic font-semibold w-[93px]">
               Pre-sale
             </h3>
-            <p className="text-center text-[#F7F7FA] fontOpen smm:text-[14px]">
+            {/* add state if not regis will hide */}
+            <p
+              className={`text-center text-[#F7F7FA] fontOpen smm:text-[14px] ${
+                isRegis ? "" : "hidden"
+              }`}
+            >
               Join the iAI Token pre-sale to power AI innovation in digital
               assistants, autonomous driving, and sustainability. Enjoy
               exclusive early rewards and shape the future of smart cities and
@@ -104,56 +141,83 @@ export default function Home() {
             </p>
           </div>
 
-          <div className=" rounded-[20px] p-10 mt-6 flex flex-col bg-[rgba(17,31,96,0.38)] lgm:w-full smm:p-0 smm:bg-transparent w-[505px] ">
-            <div className="flex gap-x-[10px] items-center">
-              <div className="flex-1">
-                <h4 className="fontmonters text-[24px] text-white font-bold">
-                  Buy $IAI
+          {/* add state if not regis will show new style */}
+          {isRegis ? (
+            <>
+              <div className=" rounded-[20px] p-10 mt-6 flex flex-col bg-[rgba(17,31,96,0.38)] lgm:w-full smm:p-0 smm:bg-transparent w-[505px] ">
+                <div className="flex gap-x-[10px] items-center">
+                  <div className="flex-1">
+                    <h4 className="fontmonters text-[24px] text-white font-bold">
+                      Buy $IAI
+                    </h4>
+                  </div>
+                  <ChainSwitchButton />
+                </div>
+                <Exchange
+                  chainId={chainId}
+                  useraddress={address}
+                  MaxUSDT={USDTAmount}
+                />
+                {chainId ? (
+                  <BuyIAI
+                    Allowance={Allowance}
+                    USDTAddress={USDTContractAdress}
+                    IAIAddress={IAIContractAddress}
+                    refetch={refetchallownace}
+                    refetchaia={refetchIai}
+                    MaxUSDT={USDTAmount}
+                    refetchUSDT={refetchUSDT}
+                    unit={unit}
+                  />
+                ) : (
+                  <div className=" fontmonters text-[16px] text-white  w-fit  mx-auto mt-6">
+                    <button
+                      className="w-full h-full bg-[#6D15CC] px-6 py-4 rounded-lg"
+                      onClick={() => {
+                        open();
+                      }}
+                    >
+                      Connect Wallet
+                    </button>
+                  </div>
+                )}
+              </div>
+              <Link
+                className="flex gap-2 items-center m-6 cursor-pointer"
+                href={
+                  "https://medium.com/@iai.center.allconnex/iai-token-pre-sale-instruction-manual-ce3283dfd2c8"
+                }
+                target={"_blank"}
+              >
+                <Book width="20" height="20" className={"fill-white"} />
+                <h5 className=" text-[16px] fontmonters text-white ">
+                  How to Buy $iAI
+                </h5>
+              </Link>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col gap-6 justify-center items-center my-10 mx-[200px] lgm:mx-0 lgm:w-full">
+                <Warning width="100" height="100" className={""} />
+                <h4 className=" text-[24px] fontIter leading-5 text-[#D32F2F] font-bold text-center">
+                  Pre-Sale Access Denied
                 </h4>
+                <h6 className="text-[16px] leading-5 fontIter text-white text-center">
+                  Your connected wallet is not whitelisted for this pre-sale and
+                  cannot proceed with the token purchase.
+                </h6>
+                <ul className="list-disc list-inside whitespace-break-spaces">
+                  <li className="text-[#F7F7FA66] ">
+                    Please re-check that you are connected to the correct
+                    wallet.
+                  </li>
+                  <li className="text-[#F7F7FA66] ">
+                    If you believe this is a mistake, please contact support.
+                  </li>
+                </ul>
               </div>
-              <ChainSwitchButton />
-            </div>
-            <Exchange
-              chainId={chainId}
-              useraddress={address}
-              MaxUSDT={USDTAmount}
-            />
-            {chainId ? (
-              <BuyIAI
-                Allowance={Allowance}
-                USDTAddress={USDTContractAdress}
-                IAIAddress={IAIContractAddress}
-                refetch={refetchallownace}
-                refetchaia={refetchIai}
-                MaxUSDT={USDTAmount}
-                refetchUSDT={refetchUSDT}
-                unit={unit}
-              />
-            ) : (
-              <div className=" fontmonters text-[16px] text-white  w-fit  mx-auto mt-6">
-                <button
-                  className="w-full h-full bg-[#6D15CC] px-6 py-4 rounded-lg"
-                  onClick={() => {
-                    open();
-                  }}
-                >
-                  Connect Wallet
-                </button>
-              </div>
-            )}
-          </div>
-          <Link
-            className="flex gap-2 items-center m-6 cursor-pointer"
-            href={
-              "https://medium.com/@iai.center.allconnex/iai-token-pre-sale-instruction-manual-ce3283dfd2c8"
-            }
-            target={"_blank"}
-          >
-            <Book width="20" height="20" className={"fill-white"} />
-            <h5 className=" text-[16px] fontmonters text-white ">
-              How to Buy $iAI
-            </h5>
-          </Link>
+            </>
+          )}
         </main>
 
         {/* <div className="grow">

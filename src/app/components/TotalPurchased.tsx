@@ -26,5 +26,4 @@ const TotalPurchased = ({purchased, totalPurchased}:{purchased: number, totalPur
           </div>
   )
 }
-
 export default TotalPurchased
